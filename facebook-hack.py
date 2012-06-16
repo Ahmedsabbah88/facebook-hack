@@ -17,7 +17,7 @@ FB_APP_ID = os.environ.get('FACEBOOK_APP_ID')
 requests = requests.session()
 
 app_url = 'https://graph.facebook.com/{0}'.format(FB_APP_ID)
-FB_APP_NAME = json.loads(requests.get(app_url).content).get('name')
+FB_APP_NAME = json.loads(requests.get(app_url, verify=False).content).get('name')
 FB_APP_SECRET = os.environ.get('FACEBOOK_SECRET')
 
 
@@ -28,6 +28,7 @@ def oauth_login_url(preserve_path=True, next_url=None):
 
     if app.config['FBAPI_SCOPE']:
         fb_login_uri += "&scope=%s" % ",".join(app.config['FBAPI_SCOPE'])
+    print fb_login_uri
     return fb_login_uri
 
 
@@ -57,7 +58,7 @@ def fbapi_get_string(path,
     url = u'https://' + domain + u'.facebook.com' + path
     params_encoded = encode_func(params)
     url = url + params_encoded
-    result = requests.get(url).content
+    result = requests.get(url, verify=False).content
 
     return result
 
@@ -99,16 +100,40 @@ def fql(fql, token, args=None):
 
     url = "https://api.facebook.com/method/fql.query"
 
-    r = requests.get(url, params=args)
+    r = requests.get(url, verify=False, params=args)
     return json.loads(r.content)
 
 
 def fb_call(call, args=None):
     url = "https://graph.facebook.com/{0}".format(call)
-    r = requests.get(url, params=args)
+    r = requests.get(url, verify=False, params=args)
     return json.loads(r.content)
 
 
+def get_user_posts():
+    access_token = get_token()
+    if access_token:
+        args = {'access_token': access_token}
+        my_posts = fb_call('/me/posts/', args=args)
+        children = []
+        if my_posts:
+            for data in my_posts['data']:
+                likes_count = 0
+                if 'likes' in data:
+                    likes_count = data['likes'].get('count')
+
+                comments_count = 0
+                if 'comments' in data:
+                    likes_count = data['comments'].get('count')
+
+                children.append({
+                    'id': data['id'],
+                    #'description': data['description'],
+                    'display_name': data['type'],
+                    'likes': likes_count,
+                    'comments': comments_count,
+                })
+        return children
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -154,7 +179,7 @@ def get_token():
         }
 
         from urlparse import parse_qs
-        r = requests.get('https://graph.facebook.com/oauth/access_token', params=params)
+        r = requests.get('https://graph.facebook.com/oauth/access_token', verify=False, params=params)
         token = parse_qs(r.content).get('access_token')
 
         return token
@@ -224,6 +249,10 @@ def about():
 def graph():
     return render_template('core/graph.html')
 
+@app.route('/_get_user_posts/', methods=['GET'])
+def user_posts():
+    data = get_user_posts()
+    return render_template('user-posts.html', data=data)
 
 @app.route('/data/', methods=['GET'])
 def test_data():
