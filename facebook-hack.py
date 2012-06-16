@@ -7,10 +7,11 @@ import urllib
 import hmac
 import json
 import hashlib
+import random
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 
 import requests
-from flask import Flask, request, redirect, render_template, url_for
+from flask import Flask, request, redirect, render_template, url_for, json, jsonify
 
 FB_APP_ID = os.environ.get('FACEBOOK_APP_ID')
 requests = requests.session()
@@ -222,6 +223,15 @@ def about():
 @app.route('/graph/', methods=['GET'])
 def graph():
     return render_template('core/graph.html')
+
+
+@app.route('/data/', methods=['GET'])
+def test_data():
+    data = []
+    for i in xrange(30):
+        customer = {"data_type": "type_{0}".format(i), "total_likes": random.randint(0, 25), "total_comments": random.randint(0, 25)}
+        data.append(customer)
+    return jsonify(data)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
