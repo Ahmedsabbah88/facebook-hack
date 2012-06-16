@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
-{% block topbar %}
-
+{% block content %}
   <!-- By passing a valid access token here, we are able to display -->
   <!-- the user's images without having to download or prepare -->
   <!-- them ahead of time -->
@@ -37,8 +36,8 @@
 
 {% endblock %}
 
-{% block content %}
-<section class="clearfix" id="samples">
+{% block main_content %}
+<div class="clearfix" id="samples">
       <h1>Examples of the Facebook Graph API</h1>
       <div class="list">
         <h3>A few of your friends</h3>
@@ -86,5 +85,5 @@
             </a>
         </li>{% endfor %}</ul>
       </div>
-    </section>
+    </div>
 {% endblock%}

@@ -216,7 +216,7 @@ def close():
 
 @app.route('/graph/', methods=['GET'])
 def graph():
-    return render_template('bubbles.html')
+    return render_template('core/graph.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
