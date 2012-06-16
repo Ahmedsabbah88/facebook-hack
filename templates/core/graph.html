@@ -20,7 +20,7 @@
 
 {% block jsblock %}
     <script type="text/javascript">
-        var r = 860,
+        var r = 820,
             fill = d3.scale.category20c();
 
         var test_data;
@@ -28,7 +28,7 @@
         var bubble = d3.layout.pack()
             .sort(null)
             .size([r, r])
-            .value(function(d) { return d.total_likes + d.total_comments; })
+            .value(function(d) { return d.total_likes + d.total_comments; });
 
         var vis = d3.select("#viz")
                     .append('svg')
@@ -39,19 +39,20 @@
         var createBubbles = function() {
             var node = vis.selectAll('g.node')
                         .data(bubble.nodes(test_data)
-                            .filter(function(d) { return !d.children; }))
+                            .filter(function(d) { return !d.children; }), String)
                         .enter()
                             .append('g')
                             .attr('class', 'node')
                             .attr('transform', function(d) {
                                 return 'translate(' + d.x + ',' + d.y + ')';
                             })
-                            .attr('title', function(d) { return d.data_type; });
+                            .attr('data-title', function(d) { return d.data_type; })
+                            .attr('data-content', 'Some test content');
             node.append('circle')
                 .style('fill', function(d) { return fill(d.data_type); })
                 .attr('r', 0)
                 .transition()
-                    .delay(function(d, i) { return i * 10; })
+                    .delay(function(d, i) { return i * 100; })
                     .attr('r', function(d) {
                         return d.r;
                     });
@@ -65,7 +66,8 @@
         d3.json("{{ url_for('test_data') }}", function(data) {
             test_data = data;
             createBubbles();
+            $('.node').popover();
         });
+
     </script>
-</div>
 {% endblock %}

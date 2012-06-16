@@ -15,7 +15,7 @@ body {
 }
 
 /* The white background content wrapper */
-.content {
+.content-wrapper {
 	background-color: #fff;
 	padding: 20px;
 	margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
@@ -34,7 +34,7 @@ body {
 }
 
 /* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
+.content-wrapper .span4 {
 	margin-left: 0;
 	padding-left: 19px;
 	border-left: 1px solid #eee;
