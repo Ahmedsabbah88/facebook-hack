@@ -252,13 +252,13 @@ def graph():
 @app.route('/_get_user_posts/', methods=['GET'])
 def user_posts():
     data = get_user_posts()
-    return render_template('user-posts.html', data=data)
+    return jsonify(children=data)
 
 @app.route('/data/', methods=['GET'])
 def test_data():
     data = []
-    for i in xrange(30):
-        customer = {"data_type": "type_{0}".format(i), "total_likes": random.randint(0, 25), "total_comments": random.randint(0, 25)}
+    for i in xrange(5):
+        customer = {"data_type": "type_{0}".format(i), "total_likes": random.randint(10, 25), "total_comments": random.randint(5, 25)}
         data.append(customer)
     return jsonify(children=data)
 
