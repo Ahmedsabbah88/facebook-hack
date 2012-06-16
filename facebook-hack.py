@@ -249,17 +249,33 @@ def about():
 def graph():
     return render_template('core/graph.html')
 
+
+@app.route('/graph/details/', methods=['GET'])
+def graph_details():
+    return render_template('core/details.html')
+
+
 @app.route('/_get_user_posts/', methods=['GET'])
 def user_posts():
     data = get_user_posts()
     return jsonify(children=data)
 
+
 @app.route('/data/', methods=['GET'])
 def test_data():
     data = []
     for i in xrange(5):
-        customer = {"data_type": "type_{0}".format(i), "total_likes": random.randint(10, 25), "total_comments": random.randint(5, 25)}
+        customer = {"display_name": "type_{0}".format(i), "likes": random.randint(10, 25), "comments": random.randint(5, 25)}
         data.append(customer)
+    return jsonify(children=data)
+
+
+@app.route('/data-details/', methods=['GET'])
+def test_detail_data():
+    data = []
+    for i in xrange(5):
+        category = {"category_name": "category_{0}".format(i), "value": random.randint(0, 100)}
+        data.append(category)
     return jsonify(children=data)
 
 if __name__ == '__main__':

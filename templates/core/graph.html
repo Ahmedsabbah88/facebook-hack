@@ -47,7 +47,7 @@
                             .attr('transform', function(d) {
                                 return 'translate(' + d.x + ',' + d.y + ')';
                             })
-                            .attr('data-title', function(d) { return d.display_name; })
+                            .attr('title', function(d) { return d.display_name; })
                             .attr('data-content', 'Some test content');
             node.append('circle')
                 .style('fill', function(d) { return fill(d.display_name); })
@@ -64,7 +64,7 @@
                 .text(function(d) { return d.display_name; });
         };
 
-        d3.json("{{ url_for('user_posts') }}", function(data) {
+        d3.json("{{ url_for('test_data') }}", function(data) {
             test_data = data;
             createBubbles();
             $('.node').popover();
