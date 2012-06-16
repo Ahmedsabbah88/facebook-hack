@@ -6,11 +6,11 @@
 
     <!-- We get the name of the app out of the information fetched -->
     <title>{{ name }}</title>
-    <link rel="stylesheet" href="static/screen.css" media="Screen" type="text/css" />
-    <link rel="stylesheet" href="static/mobile.css" media="handheld, only screen and (max-width: 480px), only screen and (max-device-width: 480px)" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='screen.css') }}" media="Screen" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='mobile.css') }}" media="handheld, only screen and (max-width: 480px), only screen and (max-device-width: 480px)" type="text/css" />
 
     <!--[if IEMobile]>
-      <link rel="stylesheet" href="static/mobile.css" media="screen" type="text/css"  />
+      <link rel="stylesheet" href="{{ url_for('static', filename='mobile.css') }}" media="screen" type="text/css"  />
     <![endif]-->
 
     <!-- These are Open Graph tags.  They add meta data to your  -->
@@ -24,9 +24,9 @@
     <meta content="" property="og:image" />
     <meta content="" property="og:site_name" />
     <meta property="og:description" content="My First App" />
-    <meta content="{{app_id}}" property="fb:app_id" />
+    <meta content="{{ app_id }}" property="fb:app_id" />
 
-    <script type="text/javascript" src="/static/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.1.min.js') }}"></script>
        <script type="text/javascript">
       function logResponse(response) {
         if (console && console.log) {

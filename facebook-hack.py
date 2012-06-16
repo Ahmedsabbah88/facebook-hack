@@ -203,6 +203,7 @@ def index():
     else:
         return render_template('login.html', app_id=FB_APP_ID, token=access_token, url=request.url, channel_url=channel_url, name=FB_APP_NAME)
 
+
 @app.route('/channel.html', methods=['GET', 'POST'])
 def get_channel():
     return render_template('channel.html')
@@ -211,6 +212,11 @@ def get_channel():
 @app.route('/close/', methods=['GET', 'POST'])
 def close():
     return render_template('close.html')
+
+
+@app.route('/graph/', methods=['GET'])
+def graph():
+    return render_template('bubbles.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
