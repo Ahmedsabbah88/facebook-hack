@@ -45,7 +45,8 @@
                             .attr('class', 'node')
                             .attr('transform', function(d) {
                                 return 'translate(' + d.x + ',' + d.y + ')';
-                            });
+                            })
+                            .attr('title', function(d) { return d.data_type; });
             node.append('circle')
                 .style('fill', function(d) { return fill(d.data_type); })
                 .attr('r', 0)

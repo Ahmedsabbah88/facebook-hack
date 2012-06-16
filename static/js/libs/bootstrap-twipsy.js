@@ -90,6 +90,13 @@
         , height: this.$element[0].offsetHeight
         })
 
+        if (typeof this.$element[0].nearestViewportElement == 'object') {
+                    // SVG
+                    var el = this.$element[0];
+                    var rect = el.getBoundingClientRect();
+                    pos.width = rect.width;
+                    pos.height = rect.height;
+                }
         actualWidth = $tip[0].offsetWidth
         actualHeight = $tip[0].offsetHeight
 
