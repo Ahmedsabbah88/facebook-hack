@@ -231,7 +231,7 @@ def test_data():
     for i in xrange(30):
         customer = {"data_type": "type_{0}".format(i), "total_likes": random.randint(0, 25), "total_comments": random.randint(0, 25)}
         data.append(customer)
-    return jsonify(data)
+    return jsonify(children=data)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

@@ -15,9 +15,12 @@
 {% block main_content %}
 <div id="viz">
     <h2>graph</h2>
+</div>
+{% endblock %}
 
+{% block jsblock %}
     <script type="text/javascript">
-        var r = 960,
+        var r = 860,
             fill = d3.scale.category20c();
 
         var test_data;
@@ -25,9 +28,9 @@
         var bubble = d3.layout.pack()
             .sort(null)
             .size([r, r])
-            .value(function(d) { return d.amount; })
+            .value(function(d) { return d.total_likes + d.total_comments; })
 
-        var vis = d3.select("#chart")
+        var vis = d3.select("#viz")
                     .append('svg')
                         .attr('width', r)
                         .attr('height', r)
@@ -35,7 +38,8 @@
 
         var createBubbles = function() {
             var node = vis.selectAll('g.node')
-                        .data(bubble.nodes(test_data))
+                        .data(bubble.nodes(test_data)
+                            .filter(function(d) { return !d.children; }))
                         .enter()
                             .append('g')
                             .attr('class', 'node')
@@ -58,7 +62,7 @@
         };
 
         d3.json("{{ url_for('test_data') }}", function(data) {
-            test_data = {'children': data};
+            test_data = data;
             createBubbles();
         });
     </script>
