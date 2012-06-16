@@ -214,6 +214,11 @@ def close():
     return render_template('close.html')
 
 
+@app.route('/about/', methods=['GET'])
+def about():
+    return render_template('core/about.html')
+
+
 @app.route('/graph/', methods=['GET'])
 def graph():
     return render_template('core/graph.html')

@@ -4,7 +4,8 @@
             <a class="brand" href="{{ url_for('index') }}">S.T.A.L.K.</a>
             <ul class="nav">
                 <li class="{% block nav_home_class %}{% endblock %}"><a href="{{ url_for('index') }}">Home</a></li>
-                <li class="{% block nav_grpah_class %}{% endblock %}"><a href="{{ url_for('graph') }}">Graph</a></li>
+                <li class="{% block nav_about_class %}{% endblock %}"><a href="{{ url_for('about') }}">About</a></li>
+                <li class="{% block nav_graph_class %}{% endblock %}"><a href="{{ url_for('graph') }}">Graph</a></li>
             </ul>
         </div>
     </div>
