@@ -48,7 +48,9 @@
                                 return 'translate(' + d.x + ',' + d.y + ')';
                             })
                             .attr('title', function(d) { return d.display_name; })
-                            .attr('data-content', 'Some test content');
+                            .attr('data-content', function(d) { 
+                                return "likes: " + d.likes + " / comments: " + d.comments;
+                            });
             node.append('circle')
                 .style('fill', function(d) { return fill(d.display_name); })
                 .attr('r', 0)

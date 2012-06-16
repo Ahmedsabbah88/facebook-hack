@@ -264,8 +264,9 @@ def user_posts():
 @app.route('/data/', methods=['GET'])
 def test_data():
     data = []
-    for i in xrange(5):
-        customer = {"display_name": "type_{0}".format(i), "likes": random.randint(10, 25), "comments": random.randint(5, 25)}
+    categories = ['photos', 'likes', 'checkins', 'posts', 'videos']
+    for c in categories:
+        customer = {"display_name": c, "likes": random.randint(10, 25), "comments": random.randint(5, 25)}
         data.append(customer)
     return jsonify(children=data)
 
