@@ -26,7 +26,7 @@
 
         var bubble = d3.layout.pack()
             .sort(null)
-            .size([r, r])
+            .size([r*0.8, r*0.8])
             .value(function(d) { return d.likes + d.comments; });
 
         var vis = d3.select("#viz")
@@ -37,8 +37,7 @@
 
         var createBubbles = function() {
             var node = vis.selectAll('g.node')
-                        .data(bubble.nodes(test_data)
-                            .filter(function(d) { return !d.children; }), String)
+                        .data(bubble.nodes(test_data).filter(function(d) { return !d.children; }), function(d) {return d.id; })
                         .enter()
                             .append("a")
                             .attr("xlink:href", function(d) { return "#" })
@@ -52,7 +51,7 @@
                                 return "likes: " + d.likes + " / comments: " + d.comments;
                             });
             node.append('circle')
-                .style('fill', function(d) { return fill(d.display_name); })
+                .style('fill', function(d) { return fill(d.id); })
                 .attr('r', 0)
                 .transition()
                     .delay(function(d, i) { return i * 100; })
@@ -61,7 +60,7 @@
                     })
         };
 
-        d3.json("{{ url_for('test_data') }}", function(data) {
+        d3.json("{{ url_for('user_posts') }}", function(data) {
             test_data = data;
             createBubbles();
             $('.node').popover();

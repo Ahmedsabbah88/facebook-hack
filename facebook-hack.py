@@ -126,13 +126,14 @@ def get_user_posts():
                 if 'comments' in data:
                     likes_count = data['comments'].get('count')
 
-                children.append({
-                    'id': data['id'],
-                    #'description': data['description'],
-                    'display_name': data['type'],
-                    'likes': likes_count,
-                    'comments': comments_count,
-                })
+                if likes_count != 0 or comments_count != 0:
+                    children.append({
+                        'id': data['id'],
+                        #'description': data['description'],
+                        'display_name': data['type'],
+                        'likes': likes_count,
+                        'comments': comments_count,
+                    })
         return children
 
 app = Flask(__name__)
